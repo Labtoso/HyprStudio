@@ -393,3 +393,12 @@ def set_lang(lang: str) -> None:
 def t(key: str, **kw) -> str:
     s = TEXT[_lang].get(key) or TEXT["de"].get(key) or key
     return s.format(**kw) if kw else s
+
+TEXT["de"].update({"app.walker": "Walker", "app.tofi": "Tofi", "pkg.walker": "Walker", "pkg.tofi": "Tofi"})
+TEXT["en"].update({"app.walker": "Walker", "app.tofi": "Tofi", "pkg.walker": "Walker", "pkg.tofi": "Tofi"})
+TEXT["de"].update({"pkgd.walker": "moderner Launcher mit vielen Modulen (GTK 4)", "pkgd.tofi": "winziger, sehr schneller Launcher"})
+TEXT["en"].update({"pkgd.walker": "modern launcher with many modules (GTK 4)", "pkgd.tofi": "tiny, very fast launcher"})
+
+
+from . import palettes  # noqa: E402
+palettes.register_titles(TEXT, "p.", "wp.", "lp.", "kp.")   # überall dieselben Namen

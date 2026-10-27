@@ -13,7 +13,8 @@ Hypr Studio is a dark, rounded desktop app for Linux (Python + PySide6) by **Lab
 ## Features
 
 ### Hyprland
-- **Presets** – Hyprland, Tokyo Night, Catppuccin, Nord, Gruvbox, Rosé Pine, Dracula, Glass, Minimal – plus your own presets (save, rename, export, import)
+- **Presets** – one shared colour set for everything (Hyprland, Waybar, launchers, lock screen, Kitty, app accent): 01, Tokyo Night, Catppuccin, Nord, Dracula, Gruvbox, One Dark, Rosé Pine, Everforest – plus extra shapes (Glass, Minimal …) and your own presets (save, rename, export, import)
+- **Reset per section** – the round-arrow button next to each section title puts only that section back to default (a backup is saved first)
 - **Windows** – gaps, borders, rounding, layout, smart gaps
 - **Workspaces** – name, monitor, gaps and border per workspace
 - **Colours & effects** – gradient borders, opacity, dimming, blur, shadows
@@ -29,7 +30,7 @@ Hypr Studio is a dark, rounded desktop app for Linux (Python + PySide6) by **Lab
 - Presets, **drag & drop bar editor**, module options, colours and fonts, on/off switch
 
 ### Launcher
-- **Rofi, Wofi, Fuzzel** and the built-in **L Launcher** – every launcher keeps its own settings
+- **Rofi, Wofi, Fuzzel, Walker, Tofi** and the built-in **L Launcher** – every launcher keeps its own settings
 - Detects which launcher your shortcuts actually start and switches shortcuts + Waybar button when you change it
 - Presets, position, size, colours, icons (follows your KDE/GTK icon theme)
 - “Second press closes”, “search from name start”
@@ -51,7 +52,7 @@ A small launcher that only shows apps whose **name starts with what you type** �
 ## Requirements
 - Hyprland (Lua config `hyprland.lua` – the old `.conf` format can be chosen under **Settings › Advanced**; Hyprland 0.57+ only supports Lua)
 - Python 3 and PySide6 (`sudo pacman -S pyside6`)
-- Optional: waybar, rofi / wofi / fuzzel, kitty, hyprpaper, hyprcursor, hyprlock, plasma-integration
+- Optional: waybar, rofi / wofi / fuzzel / walker / tofi, kitty, hyprpaper, hyprcursor, hyprlock, plasma-integration
 
 ## Installation
 **From a release:** download `HyprStudio-<version>.zip`, extract it and run `sh Install.sh` (or double-click *Install Hypr Studio*). `uninstall.sh` removes it again.

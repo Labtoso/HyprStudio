@@ -16,7 +16,8 @@ class Packages(unittest.TestCase):
     def test_every_package_has_pacman(self):
         for k, (g, check, pkgs) in packages.PACKAGES.items():
             self.assertIn(g, packages.GROUPS)
-            self.assertTrue(pkgs.get("pacman"), k)
+            if k != "tofi":                     # tofi gibt es auf Arch nur im AUR
+                self.assertTrue(pkgs.get("pacman"), k)
 
 
 if __name__ == "__main__":

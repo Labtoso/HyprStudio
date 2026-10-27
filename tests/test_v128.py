@@ -33,12 +33,13 @@ class LockLayouts(unittest.TestCase):
 
 class Accents(unittest.TestCase):
     def test_new_colours_and_readable_text(self):
-        for name in ("orange", "white", "mint"):
+        for name in ("01", "tokyo", "everforest"):
             self.assertIn(name, theme.THEMES)
-        self.assertEqual(theme.on_accent(theme.THEMES["white"]), theme.BG)
-        self.assertEqual(theme.on_accent(theme.THEMES["mint"]), theme.BG)
-        self.assertEqual(theme.on_accent(theme.THEMES["blue"]), "#ffffff")
-        self.assertIn(f"color: {theme.BG}", theme.qss(theme.THEMES["white"]))
+        self.assertEqual(theme.on_accent(theme.THEMES["01"]), theme.BG)
+        self.assertEqual(theme.on_accent(theme.THEMES["everforest"]), theme.BG)
+        self.assertIn(f"color: {theme.BG}", theme.qss(theme.THEMES["01"]))
+        for old, new in (("white", "01"), ("blue", "tokyo"), ("orange", "gruvbox"), ("mint", "everforest")):
+            self.assertEqual(theme.LEGACY_ACCENT[old], new)
 
 
 if __name__ == "__main__":

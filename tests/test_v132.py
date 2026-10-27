@@ -37,19 +37,21 @@ class DarkEverywhere(unittest.TestCase):
             finally:
                 model.FORMAT = old
             look = (home / "hypr" / "hyprstudio_look.lua").read_text(encoding="utf-8")
-            self.assertIn('hl.env("GTK_THEME", "Adwaita:dark")', look)
+            self.assertNotIn("GTK_THEME", look)    # bricht libadwaita-Apps – nur noch über das Portal
             self.assertEqual((home / "hypr" / "hyprland.lua").read_text(encoding="utf-8").count('require("hyprstudio_look")'), 1)
-        self.assertIn("env = GTK_THEME,Adwaita\n", appearance.env_content("light", "", "conf"))
+        self.assertNotIn("GTK_THEME", appearance.env_content("light", "", "conf"))
 
-    def test_services_get_theme(self):
-        """„Öffnen mit“- und Datei-Dialoge kommen vom GTK-Portal (systemd-Dienst) → environment.d."""
+    def test_services_clean_old_file(self):
+        """Die alte environment.d-Datei (galt auch für GNOME) wird nur noch entfernt, fremde Dateien bleiben."""
         with tempfile.TemporaryDirectory() as d:
+            f = Path(d) / "environment.d" / "60-hyprstudio-look.conf"
+            f.parent.mkdir()
+            f.write_text(f"# {appearance.MARK}\nGTK_THEME=Adwaita:dark\n", encoding="utf-8")
             appearance.apply_services("dark", Path(d), lambda *_: None)
-            text = (Path(d) / "environment.d" / "60-hyprstudio-look.conf").read_text(encoding="utf-8")
-            self.assertIn("GTK_THEME=Adwaita:dark\n", text)
-            appearance.apply_services("light", Path(d), lambda *_: None)
-            text = (Path(d) / "environment.d" / "60-hyprstudio-look.conf").read_text(encoding="utf-8")
-            self.assertIn("GTK_THEME=Adwaita\n", text)
+            self.assertFalse(f.exists())
+            f.write_text("GTK_THEME=meins\n", encoding="utf-8")
+            appearance.apply_services("dark", Path(d), lambda *_: None)
+            self.assertTrue(f.exists())
 
     @unittest.skipIf(lupa is None, "lupa nicht installiert")
     def test_lua_runs(self):
