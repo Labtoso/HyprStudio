@@ -562,6 +562,25 @@ class ModuleColumns(QtWidgets.QWidget):
         self.setToolTip(t("tip.modules"))
 
 
+IMPRINT_URL = "https://labtoso.de/impressum"
+
+
+def open_url(url: str) -> None:
+    """Öffnet eine Web-Adresse im Standardbrowser (nie im App-Fenster): xdg-open, sonst Qt."""
+    if model.DRY:
+        return
+    import shutil
+    import subprocess
+    if shutil.which("xdg-open"):
+        try:
+            subprocess.Popen(["xdg-open", url], start_new_session=True,
+                             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            return
+        except OSError:
+            pass
+    QtGui.QDesktopServices.openUrl(QtCore.QUrl(url))
+
+
 class SettingsPanel(QtWidgets.QFrame):
     lang_changed = Signal(str)
     theme_changed = Signal(str)
@@ -641,6 +660,16 @@ class SettingsPanel(QtWidgets.QFrame):
         self.info.setObjectName("Label")
         self.info.setWordWrap(True)
         lay.addWidget(self.info)
+        lay.addSpacing(4)
+        self.imprint = QtWidgets.QLabel(
+            f'<a href="{IMPRINT_URL}" style="color:{theme.MUTED}; text-decoration:underline;">Impressum</a>')
+        self.imprint.setObjectName("Label")
+        self.imprint.setTextFormat(Qt.TextFormat.RichText)
+        self.imprint.setOpenExternalLinks(False)
+        self.imprint.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.imprint.setToolTip(IMPRINT_URL)
+        self.imprint.linkActivated.connect(open_url)
+        lay.addWidget(self.imprint, 0, Qt.AlignmentFlag.AlignLeft)
         self._build_advanced()
 
     def _build_advanced(self):
